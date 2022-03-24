@@ -3,7 +3,7 @@ function [NV WinFC] = DynFC_slidingwindow(data,WL)
 %%% [NV WinFC] = DynFC_slidingwindow(data,WL)
 %%% The function calculates dynamic functional connectivity features
 %%% using a sliding window approach with pairwise correlation.
-%%% Although it accounts for different length of fMRI timecourses,
+%%% Although it accounts for different length of fMRI timecourses per subject,
 %%% it is suggested to use the same length of fMRI timeserious.
 %%% If there are any, a warning message will show up. 
 %%%
