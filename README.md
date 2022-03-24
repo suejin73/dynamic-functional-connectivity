@@ -1,5 +1,5 @@
 # dynamic-functional-connectivity
-codes for dynamic functionaal connectivity - fMRI.
+MATLAB codes for dynamic functionaal connectivity - fMRI.
 
 The method has been used to calculate part of the dynamic features in the following references:
 
