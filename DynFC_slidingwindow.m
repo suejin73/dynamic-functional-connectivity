@@ -97,7 +97,7 @@ else
             temp1 = sqrt((triu(WinMat(:,:,l)) - triu(WinMat(:,:,l+1))).^2);
             NV_all(1,l) = nansum(nansum(temp1));
             temp2 = sqrt((diag(WinMat([1:size(data,1)/2], [size(data,1)/2+1:size(data,1)], l)) - diag(WinMat([1:size(data,1)/2], [size(data,1)/2+1:size(data,1)], l+1))).^2);
-            ICdyn_all(1,l) = nansum(nansum(temp2));
+            ICdyn_all(1,l) = nansum(temp2);
         end
         if sum(isinf(NV_all))>0
             sprintf('the %d th subject has different length of fMRI timepoints',m)
