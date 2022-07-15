@@ -28,7 +28,7 @@ function [NV, ICdyn, WinFC] = DynFC_slidingwindow(data,WL)
 
 %%% Sue-Jin Lin @ MNI, 20200226
 %%% 20200430 update to take cell as well
-%%% 20220714 update to calculate IC dynamics
+%%% 20220715 update to calculate IC dynamics
 
 %%% decide data format
 checkdata = iscell(data);
@@ -74,9 +74,10 @@ if mod(size(data,1),2) ~= 0
         end
         if sum(isinf(NV_all))>0
             sprintf('the %d th subject has different length of fMRI timepoints',m)
-            EndTPind = find(isinf(NV_all));
+            
             NV_all(isinf(NV_all)) = 0; % if there are 0 in the timepoints-> generate inf, make it 0
             % adjust NV measure for shorter time course
+            EndTPind = find(NV_all,1,'last');
             NV_ave = nansum(NV_all)/EndTPind; % average across windows per subject
             NV(m,1) = double(NV_ave); % contains 1 value of all subejcts
         else
@@ -100,13 +101,15 @@ else
         end
         if sum(isinf(NV_all))>0
             sprintf('the %d th subject has different length of fMRI timepoints',m)
-            EndTPind = find(isinf(NV_all));
+            
             NV_all(isinf(NV_all)) = 0; % if there are 0 in the timepoints-> generate inf, make it 0
             ICdyn_all(isinf(ICdyn_all)) = 0;
             % adjust NV measure for shorter time course
-            NV_ave = nansum(NV_all)/EndTPind; % average across windows per subject
+            EndTPind = find(NV_all,1,'last');
+            NV_ave = sum(NV_all)/EndTPind; % average across windows per subject
             NV(m,1) = double(NV_ave); % contains 1 value of all subejcts
-            ICdyn_ave = nansum(ICdyn_all)/EndTPind;
+            EndTPind = find(ICdyn_all,1,'last'); % NA takes more vals than ICdyn for calculations, so ICdyn may have more non-inf values
+            ICdyn_ave = sum(ICdyn_all)/EndTPind;
             ICdyn(m,1) = double(ICdyn_ave);
         else
             NV_ave = nansum(NV_all)/size(WinMat,3)-1; % average across windows per subject
